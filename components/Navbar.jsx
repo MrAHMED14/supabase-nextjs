@@ -1,8 +1,16 @@
+import { createClient } from "@/lib/supabase"
 import Link from "next/link"
+import AvatarMenu from "./AvatarMenu"
 import MaxWidthWrapper from "./MaxWidthWrapper"
-import { Button } from "./ui/button"
+import { Button, buttonVariants } from "./ui/button"
 
-const Navbar = () => {
+const Navbar = async () => {
+  const supabase = createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
   return (
     <nav className="w-full sticky top-0 z-50 backdrop-blur-sm">
       <MaxWidthWrapper>
@@ -31,10 +39,26 @@ const Navbar = () => {
 
           {/* Right */}
           <div className="w-full flex items-center justify-end gap-x-2">
-            <Button variant="ghost">Login</Button>
-            <Button className="text-white bg-blue-500 hover:bg-blue-400">
-              Sign in
-            </Button>
+            {user ? (
+              <>
+                <AvatarMenu
+                  img={user.user_metadata.avatar_url}
+                  name={user.user_metadata.name}
+                />
+              </>
+            ) : (
+              <>
+                <Link href={"/login"}>Login</Link>
+                <Link
+                  href={"/login"}
+                  className={
+                    "text-white bg-blue-500 hover:bg-blue-400 px-2 py-1 rounded"
+                  }
+                >
+                  Sign in
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </MaxWidthWrapper>

@@ -1,6 +1,6 @@
-import Notes from "@/components/Notes"
 import InputForm from "@/components/InputForm"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
+import Notes from "@/components/Notes"
 
 export const dynamic = "force-dynamic"
 
