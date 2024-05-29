@@ -3,6 +3,7 @@ import Link from "next/link"
 import AvatarMenu from "./AvatarMenu"
 import MaxWidthWrapper from "./MaxWidthWrapper"
 import { Button, buttonVariants } from "./ui/button"
+import { MoveRight } from "lucide-react"
 
 const Navbar = async () => {
   const supabase = createClient()
@@ -11,20 +12,22 @@ const Navbar = async () => {
     data: { user },
   } = await supabase.auth.getUser()
 
+  console.log(user)
+
   return (
     <nav className="w-full sticky top-0 z-50 backdrop-blur-sm">
       <MaxWidthWrapper>
         <div className="w-full flex items-center justify-between mx-auto my-2">
           {/* Left */}
-          <div className="w-full flex items-center">
-            <Link className="text-xl font-bold" href={"/"}>
+          <div className="sm:w-full flex items-center">
+            <Link className="text-base sm:text-xl font-bold" href={"/"}>
               LOGO
             </Link>
           </div>
 
           {/* Center */}
-          <div className="w-full flex items-center justify-center">
-            <ul className="hidden sm:flex justify-center items-center space-x-5">
+          <div className="w-full hidden sm:flex items-center justify-center">
+            <ul className="flex justify-center items-center space-x-5">
               <li>
                 <Link href={"/"}>Home</Link>
               </li>
@@ -48,14 +51,16 @@ const Navbar = async () => {
               </>
             ) : (
               <>
-                <Link href={"/login"}>Login</Link>
+                <Link href={"/login"} className="text-sm sm:text-base">
+                  Login
+                </Link>
                 <Link
-                  href={"/login"}
+                  href={"/notes"}
                   className={
-                    "text-white bg-blue-500 hover:bg-blue-400 px-2 py-1 rounded"
+                    "text-sm sm:text-base text-white bg-blue-500 hover:bg-blue-400 px-2 py-1 rounded flex items-center gap-2"
                   }
                 >
-                  Sign in
+                  Create Note <MoveRight strokeWidth={1} size={16} />
                 </Link>
               </>
             )}

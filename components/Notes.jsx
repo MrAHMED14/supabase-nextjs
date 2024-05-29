@@ -1,7 +1,7 @@
-import { getAllNotes } from "@/lib/action"
+import { getUserNotes } from "@/lib/action"
 
 const Notes = async () => {
-  const notes = await getAllNotes()
+  const notes = await getUserNotes()
   return (
     <>
       {notes?.map((note, i) => (

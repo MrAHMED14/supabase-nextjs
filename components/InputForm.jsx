@@ -13,11 +13,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
 import { LoaderCircle } from "lucide-react"
-import { createNote } from "@/lib/action"
+import { useState } from "react"
 import { toast } from "sonner"
+import { createNote } from "@/lib/action"
 
 const FormSchema = z.object({
   title: z.string().min(2, {
@@ -27,7 +28,7 @@ const FormSchema = z.object({
 
 const InputForm = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const pending = isLoading
+  const [pending, setPending] = useState(false)
 
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -38,12 +39,19 @@ const InputForm = () => {
 
   async function onSubmit(data) {
     setIsLoading(true)
+    setPending(true)
 
-    await createNote(data.title)
+    const { status } = await createNote(data.title)
 
-    toast.success("Your notes added successfully")
+    if (status === 401) {
+      toast.error("Somthing not ok!")
+    }
+    if (status === 200) {
+      toast.success("Your notes added successfully")
+      form.reset()
+    }
 
-    form.reset()
+    setPending(false)
     setIsLoading(false)
   }
 
