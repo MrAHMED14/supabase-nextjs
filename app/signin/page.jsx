@@ -1,6 +1,6 @@
 import LoginBtns from "@/components/LoginBtns"
+import SignInForm from "@/components/SignInForm"
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
-import SignInForm from "@/components/SigninForm"
 import Link from "next/link"
 
 export default function Page() {
